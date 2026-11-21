@@ -194,3 +194,39 @@ body.dark .guide-note{color:#aab6ad}
   .guide-header{padding:9px 12px}
   .guide-note{padding-bottom:6px}
 }
+
+/* Google Drive study notes */
+.study-resources-section{padding-top:25px}
+.study-resources-intro{max-width:560px;margin:-12px 0 25px;color:#727a74;font-size:12px;line-height:1.7}
+.study-resource-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:start}
+.study-resource-card{display:flex;flex-direction:column;align-items:flex-start;min-width:0;min-height:235px;padding:19px;border:1px solid #e5e4dd;border-radius:8px;background:#faf9f6;transition:transform .2s,border-color .2s,box-shadow .2s}
+.study-resource-card:hover{transform:translateY(-3px);border-color:#c7b5a5;box-shadow:0 12px 25px #263d420d}
+.study-resource-icon{display:grid;place-items:center;width:44px;height:44px;border-radius:10px;background:#e8ece5;color:#42584d;font:800 12px Manrope,sans-serif}
+.study-resource-icon.icon-peach{background:#f0e4d9;color:#96664d}
+.study-resource-icon.icon-sage{background:#e1e9df;color:#526b55}
+.study-resource-icon.icon-blue{background:#e0e8ec;color:#4b6470}
+.study-resource-icon.icon-lilac{background:#e8e5ee;color:#625b78}
+.study-resource-copy{margin-top:18px}
+.study-resource-label{font-size:8px;font-weight:700;letter-spacing:1.1px;color:#9b735e}
+.study-resource-copy h3{margin:7px 0 6px;font:700 15px/1.3 Manrope,sans-serif;letter-spacing:-.3px;color:#263d42}
+.study-resource-copy p{margin:0;color:#7a827c;font-size:10px;line-height:1.6}
+.study-more-notes{width:100%;margin-top:13px}
+.study-more-notes summary{padding:9px 10px;border:1px solid #dfe3dc;border-radius:6px;color:#52675a;font-size:10px;font-weight:700;cursor:pointer;list-style:none}
+.study-more-notes summary::-webkit-details-marker{display:none}
+.study-more-notes summary:after{content:"+";float:right;color:#9b735e}
+.study-more-notes[open] summary:after{content:"-"}
+.study-note-list{display:grid;gap:5px;max-height:180px;overflow:auto;margin-top:8px}
+.study-note-list a{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 9px;border-radius:5px;background:#f0f1eb;color:#40554b;font-size:9px;line-height:1.4}
+.study-note-list a:hover{background:#e5e9e1;color:#263d42}
+.study-note-link{width:100%;margin-top:auto;padding:10px 12px;font-size:10px;justify-content:space-between}
+.study-resource-card:focus-within{outline:2px solid #81978a;outline-offset:3px}
+body.dark .study-resource-card{background:#202d29;border-color:#34423c}
+body.dark .study-resource-copy h3{color:#edf1eb}
+body.dark .study-resource-copy p,body.dark .study-resources-intro{color:#aebbb2}
+body.dark .study-resource-label{color:#d2a486}
+body.dark .study-more-notes summary{border-color:#445349;color:#d4dfd5}
+body.dark .study-note-list a{background:#293832;color:#dce6dc}
+body.dark .study-note-list a:hover{background:#34463d;color:#fff}
+@media(max-width:900px){.study-resource-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:650px){.study-resources-section{padding-top:10px}.study-resource-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.study-resource-card{min-height:230px;padding:15px}.study-resource-copy h3{font-size:14px}}
+@media(max-width:380px){.study-resource-grid{grid-template-columns:1fr}.study-resource-card{min-height:0}.study-resource-copy{margin-bottom:20px}}

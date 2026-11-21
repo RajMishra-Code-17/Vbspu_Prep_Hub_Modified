@@ -180,29 +180,20 @@ $("authForm").addEventListener("submit",async e=>{
 
 // ---------------- LEARNING LIBRARY ----------------
 
-/* =====================================================================
-   PDF FILE PATHS: link a PDF to each lesson here
-   Key   = lesson title, exactly as written in the `resources` list below
-   Value = path or URL of the PDF (relative to index.html, or a full https:// link)
-   Example:  "Arrays": "resources/dsa/arrays.pdf",
-   • Put PDF files in the resources folder and set the matching lesson path below.
-   • Leave "" (empty) and the PDF box stays hidden for that lesson.
-   • Avoid spaces in file names (use arrays-notes.pdf, not "arrays notes.pdf").
-   • Open the site through a web server or hosting (not file://) for the inline preview.
-   ===================================================================== */
-const PDF_LINKS = {
- "Arrays":              "resources/dsa/arrays.pdf.pdf",
- "Strings":             "resources/dsa/Strings.pdf",
- "Linked List":         "resources/dsa/Linked.pdf.pdf",
- "Stack":               "resources/dsa/Stack.pdf",
- "Queue":               "resources/dsa/Queue.pdf",
- "Trees":               "resources/dsa/trees.pdf",
- "Graphs":              "resources/dsa/graphs.pdf",
- "Dynamic Programming": "resources/dsa/dynamic.pdf",
- "Quantitative Aptitude":"resources/aptitude/Quantitative Aptitude.pdf.pdf",
- "Logical Reasoning":   "resources/aptitude/Logical Reasoning.pdf",
- "Verbal Ability":      "resources/aptitude/Verbal Ability.pdf.pdf",
- "Data Interpretation": "resources/aptitude/Data Interpretation.pdf",
+/* Google Drive file IDs for lesson PDFs, keyed by lesson title. */
+const DRIVE_PDF_IDS = {
+ "Arrays":              "1Li-vOznuJhBDDqy0ORJfNigaxtxDjuMo",
+ "Strings":             "1azA-ryNPVPC82c5Sut0D0XDNcHDRHm61",
+ "Linked List":         "1V6UskTjz2ckQTzxmmHHNXoRo8oRYsvrG",
+ "Stack":               "15hOxqSuyC3oA8uPhxiCG5ezqaF2W13gD",
+ "Queue":               "1JafQ7f4v3RcJoewDD_GP7rlUkUYZhbhI",
+ "Trees":               "13WENj2DtmljV0xJRxXM1FANY89aoRO3M",
+ "Graphs":              "1HmffSupiMJr0fTiepifwxZ1-CgU9ekcz",
+ "Dynamic Programming": "1dMcczbsNBB4FMmMyrJ3gZg1wi6nF1h0s",
+ "Quantitative Aptitude":"1tZ84svLV2aT_ceC2t_jWxzrKbE076eGt",
+ "Logical Reasoning":   "1owWVxfb0tcprkdjbCRCdeiML_JGLa1WP",
+ "Verbal Ability":      "1dYWXGjRleS0_en-_ml2fz8wOqAn9cS4a",
+ "Data Interpretation": "1siibedPSEXxC1Hp5L5px6bICOfjHjP9H",
  "Expert Resume Tips":  "",
  "ATS Friendly Templates":"",
  "Professional Layouts": "",
@@ -216,29 +207,33 @@ const PDF_LINKS = {
  "Accenture":           "",
  "Capgemini":           "",
  "Wipro":               "",
- "HTML":                "resources/html.pdf",
- "CSS":                 "resources/css.pdf",
- "C":                   "resources/c.pdf",
- "JavaScript":          "resources/javascript.pdf",
- "Python":              "resources/python.pdf",
- "C++":                 "resources/cpp.pdf",
- "Operating System":    "resources/os.pdf",
- "DBMS":                "resources/dbms.pdf",
- "Computer Networks":   "resources/cn.pdf",
- "OOPs":                "resources/oops.pdf",
- "Java":                "resources/java.pdf",
- "DSA Notes":           "resources/dsa.pdf",
+ "HTML":                "1P5B_WF5Zt91rQqjyQRg3SklqipKrJ3rT",
+ "CSS":                 "1zo2a0yMLYF99iaCSjPN-9mS_v-rGfYPO",
+ "C":                   "1EPUBCBm61zyKSFrafNBni5LIWt5-kHBx",
+ "JavaScript":          "12ao7kw4jBadcbajwEPu5gVR5TEjJEYPQ",
+ "Python":              "1hraQd26Q-DR9d7LAgRX3uOUDx5nZXO9J",
+ "C++":                 "14bSD25nx2-RixGX_i0KPhU9aLFVni1Az",
+ "Operating System":    "1XrDC7vo2WCa6VI5scP72qrCol28YeGmg",
+ "DBMS":                "1eVkISGgBhmvQnCXv-uJu3D8zQnzjj7lb",
+ "Computer Networks":   "1O0idLnb9CuL0pXVjAWWm6Wq_e9uwqzKJ",
+ "OOPs":                "1i8hc_GFXxrTu_ZWe_74DqLVXzyoumBU3",
+ "Java":                "11ldI7m3Jkf55o0RTqpUX-B1HWQc21DXI",
+ "DSA Notes":           "1M2llFTrUR3hPvhx_WbisI7X4XWUCJKUn",
 };
 
 function renderPdf(item){
- const box=$("lessonPdf"), frame=$("pdfFrame"), path=(PDF_LINKS[item.title]||"").trim();
+ const box=$("lessonPdf"), frame=$("pdfFrame"), fileId=DRIVE_PDF_IDS[item.title]||"";
  frame.classList.add("hidden"); frame.removeAttribute("src"); $("pdfPreviewBtn").textContent="Preview here";
- if(!path){box.classList.add("hidden");return;}
- box.classList.remove("hidden"); $("pdfOpen").href=path; $("pdfDownload").href=path;
+ if(!fileId){box.classList.add("hidden");frame.removeAttribute("data-preview-url");return;}
+ const driveFileUrl=`https://drive.google.com/file/d/${fileId}`;
+ box.classList.remove("hidden");
+ $("pdfOpen").href=`${driveFileUrl}/view?usp=sharing`;
+ $("pdfDownload").href=`https://drive.google.com/uc?export=download&id=${encodeURIComponent(fileId)}`;
+ frame.dataset.previewUrl=`${driveFileUrl}/preview`;
 }
 $("pdfPreviewBtn").addEventListener("click",()=>{
  const f=$("pdfFrame"), show=f.classList.contains("hidden");
- if(show)f.src=$("pdfOpen").getAttribute("href");
+ if(show)f.src=f.dataset.previewUrl;
  f.classList.toggle("hidden",!show); $("pdfPreviewBtn").textContent=show?"Hide preview":"Preview here";
 });
 
@@ -337,7 +332,7 @@ function openResource(title){
  homeView.classList.add("hidden"); authScreen.classList.add("hidden"); readerScreen.classList.remove("hidden");
  $("readerCategory").textContent=item.cat.toUpperCase(); $("readerMeta").textContent=`${item.tag} · Beginner friendly`; $("readerKicker").textContent=`${item.tag} / LEARNING NOTE`;
  $("readerTitle").textContent=item.title; $("readerLead").textContent=item.lead; $("readerBody").innerHTML=renderLesson(item);
- renderPdf(item); // show PDF box only if a path is set in PDF_LINKS
+ renderPdf(item);
  updateReaderSave();
  const index=resources.indexOf(item); $("readerPrev").disabled=index===0; $("readerNext").disabled=index===resources.length-1;
  window.scrollTo(0,0);
