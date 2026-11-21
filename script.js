@@ -18,6 +18,108 @@ feedbackForm?.addEventListener("submit", (event) => {
   feedbackForm.reset();
 });
 
+const guidePanel = $("guidePanel");
+const guideMessages = $("guideMessages");
+const guideInput = $("guideInput");
+function addGuideMessage(message, type, action) {
+  const bubble = document.createElement("div");
+  bubble.className = `guide-message guide-${type}`;
+  bubble.textContent = message;
+  guideMessages.appendChild(bubble);
+  if (action) {
+    const button = document.createElement(action.note ? "button" : "a");
+    button.className = "guide-action";
+    button.textContent = action.label;
+    if (action.note) {
+      button.type = "button";
+      button.dataset.note = action.note;
+    } else {
+      button.href = action.href;
+    }
+    guideMessages.appendChild(button);
+  }
+  guideMessages.scrollTop = guideMessages.scrollHeight;
+}
+function guideResponse(question) {
+  const text = question.toLowerCase();
+  if (/^(hi|hello|hey)\b/.test(text)) {
+    return { message: "Hi! Tell me what you want to work on—DSA, aptitude, interviews, resumes, or finding resources." };
+  }
+  const topicLinks = [
+    [/\bhtml\b/, "HTML"], [/\bcss\b/, "CSS"], [/\bjavascript\b|\bjs notes?\b/, "JavaScript"],
+    [/\bpython\b/, "Python"], [/\bc\+\+\b/, "C++"],
+    [/\bc programming\b|\bc language\b|\bc notes\b/, "C"], [/\bjava\b(?!script)/, "Java"],
+    [/\boperating systems?\b|\bos notes\b/, "Operating System"],
+    [/\bdbms\b|\bdatabase management\b/, "DBMS"],
+    [/\bcomputer networks?\b|\bnetworking notes\b/, "Computer Networks"],
+    [/\boops\b|\bobject[- ]oriented\b/, "OOPs"], [/\bdsa notes?\b/, "DSA Notes"],
+    [/\barrays?\b/, "Arrays"], [/\bstrings?\b/, "Strings"], [/\blinked lists?\b/, "Linked List"],
+    [/\bstacks?\b/, "Stack"], [/\bqueues?\b/, "Queue"], [/\btrees?\b/, "Trees"],
+    [/\bgraphs?\b/, "Graphs"], [/\bdynamic programming\b|\bdp notes\b/, "Dynamic Programming"],
+    [/\bquantitative aptitude\b|\baptitude notes\b/, "Quantitative Aptitude"],
+    [/\blogical reasoning\b/, "Logical Reasoning"], [/\bverbal ability\b/, "Verbal Ability"],
+    [/\bdata interpretation\b/, "Data Interpretation"], [/\bhr questions?\b/, "HR Questions"],
+    [/\btechnical questions?\b/, "Technical Questions"], [/\bresume tips\b|\bcv tips\b/, "Expert Resume Tips"],
+    [/\bats templates?\b/, "ATS Friendly Templates"], [/\bprofessional resume layouts?\b/, "Professional Layouts"]
+  ];
+  const topic = topicLinks.find(([pattern]) => pattern.test(text));
+  if (topic) {
+    const title = topic[1];
+    return { message: `I found the ${title} learning notes. Open the lesson to read them.`, label: `Open ${title} notes`, note: title };
+  }
+  if (/(start|beginner|new here|where.*begin)/.test(text)) {
+    return { message: "Start with one small goal: explore the learning resources, then follow the DSA roadmap from Arrays & Strings. Try a short practice session and build from there.", label: "See the DSA roadmap", href: "#roadmap" };
+  }
+  if (/(dsa|data structure|algorithm|roadmap)/.test(text)) {
+    return { message: "The roadmap begins with Arrays & Strings, then moves to Linked Lists, Stacks & Queues, Trees & Graphs, and Dynamic Programming. Open a topic to study at your own pace.", label: "Open Arrays lesson", note: "Arrays" };
+  }
+  if (/(aptitude|quant|reason|verbal|math)/.test(text)) {
+    return { message: "For aptitude, begin with Quantitative Aptitude and practise a little regularly. Logical Reasoning and Verbal Ability are also in the resources library.", label: "Open Quantitative Aptitude", note: "Quantitative Aptitude" };
+  }
+  if (/(interview|hr question|technical question)/.test(text)) {
+    return { message: "Interview prep is in the resources library. Start with HR Questions, then review Technical Questions and practise explaining a project using clear examples.", label: "Open HR Questions", note: "HR Questions" };
+  }
+  if (/(resume|cv|ats)/.test(text)) {
+    return { message: "The Resume Builder resources cover practical resume tips, ATS-friendly templates, and professional layouts. Keep your details accurate and easy to scan.", label: "Open resume tips", note: "Expert Resume Tips" };
+  }
+  if (/(resource|find|search|library|subject|notes)/.test(text)) {
+    return { message: "Browse the Resources section and use its search box to find a topic, subject, or skill. You can also filter saved and recently opened lessons.", label: "Browse resources", href: "#resources" };
+  }
+  if (/(account|login|log in|sign up|register)/.test(text)) {
+    return { message: "You can create an account or log in using the buttons at the top of the page. Your saved lessons and recent activity are stored in this browser." };
+  }
+  if (/(contact|feedback|email|suggest)/.test(text)) {
+    return { message: "You can send feedback or contact the site creators using the form near the bottom of the page.", label: "Go to feedback", href: "#feedback" };
+  }
+  return { message: "I can guide you around the hub. Ask me about getting started, DSA, aptitude, interview prep, resumes, accounts, or finding resources." };
+}
+function sendGuideMessage(question) {
+  const trimmedQuestion = question.trim();
+  if (!trimmedQuestion) return;
+  addGuideMessage(trimmedQuestion, "student");
+  const response = guideResponse(trimmedQuestion);
+  addGuideMessage(response.message, "bot", response.label ? response : null);
+}
+$("guideToggle").addEventListener("click", () => {
+  const isOpening = guidePanel.classList.contains("hidden");
+  guidePanel.classList.toggle("hidden", !isOpening);
+  $("guideToggle").setAttribute("aria-expanded", String(isOpening));
+  if (isOpening) guideInput.focus();
+});
+$("guideClose").addEventListener("click", () => {
+  guidePanel.classList.add("hidden");
+  $("guideToggle").setAttribute("aria-expanded", "false");
+  $("guideToggle").focus();
+});
+$("guideForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+  sendGuideMessage(guideInput.value);
+  guideInput.value = "";
+});
+document.querySelectorAll("[data-guide-suggestion]").forEach((button) => {
+  button.addEventListener("click", () => sendGuideMessage(button.dataset.guideSuggestion));
+});
+
 // ---------------- AUTHENTICATION ----------------
 let authMode = "login";
 const homeView = $("homeView"), authScreen = $("authScreen"), readerScreen = $("readerScreen");
