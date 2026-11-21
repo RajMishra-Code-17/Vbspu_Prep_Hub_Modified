@@ -5,6 +5,19 @@ const $ = (id) => document.getElementById(id);
 const safeRead = (key, fallback) => { try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; } };
 const safeWrite = (key, value) => localStorage.setItem(key, JSON.stringify(value));
 
+const feedbackForm = $("feedbackForm");
+feedbackForm?.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const name = $("feedbackName").value.trim();
+  const email = $("feedbackEmail").value.trim();
+  const message = $("feedbackMessage").value.trim();
+  const subject = encodeURIComponent("Website feedback from " + name);
+  const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nFeedback:\n${message}`);
+  toast("Opening your email app...");
+  window.location.href = `mailto:rajmishra63541@gmail.com?subject=${subject}&body=${body}`;
+  feedbackForm.reset();
+});
+
 // ---------------- AUTHENTICATION ----------------
 let authMode = "login";
 const homeView = $("homeView"), authScreen = $("authScreen"), readerScreen = $("readerScreen");
@@ -66,29 +79,53 @@ $("authForm").addEventListener("submit",async e=>{
 // ---------------- LEARNING LIBRARY ----------------
 
 /* =====================================================================
-   📄 PDF FILE PATHS: PUT YOUR PDF PATHS HERE
+   PDF FILE PATHS: link a PDF to each lesson here
    Key   = lesson title, exactly as written in the `resources` list below
    Value = path or URL of the PDF (relative to index.html, or a full https:// link)
-   Example:  "Arrays": "pdfs/dsa/arrays.pdf",
+   Example:  "Arrays": "resources/dsa/arrays.pdf",
+   • Put PDF files in the resources folder and set the matching lesson path below.
    • Leave "" (empty) and the PDF box stays hidden for that lesson.
    • Avoid spaces in file names (use arrays-notes.pdf, not "arrays notes.pdf").
    • Open the site through a web server or hosting (not file://) for the inline preview.
-   • Add as many lines as you like, using the same pattern.
    ===================================================================== */
 const PDF_LINKS = {
- "Arrays":              "", // 👉 e.g. "pdfs/dsa/arrays.pdf"
- "Linked List":         "", // 👉 e.g. "pdfs/dsa/linked-list.pdf"
- "Trees":               "", // 👉 e.g. "pdfs/dsa/trees.pdf"
- "Dynamic Programming": "", // 👉 e.g. "pdfs/dsa/dp.pdf"
- "DSA Notes":           "", // 👉 e.g. "pdfs/dsa/dsa-notes.pdf"
- "C":                   "", // 👉 e.g. "pdfs/c-programming.pdf"
- "Java":                "", // 👉 e.g. "pdfs/java.pdf"
- "Python":              "", // 👉 e.g. "pdfs/python.pdf"
- "DBMS":                "", // 👉 e.g. "pdfs/dbms.pdf"
- "Operating System":    "", // 👉 e.g. "pdfs/os.pdf"
- "Computer Networks":   "", // 👉 e.g. "pdfs/cn.pdf"
- "Expert Resume Tips":  "", // 👉 e.g. "pdfs/resume-tips.pdf"
- // "Your Lesson Title": "pdfs/your-file.pdf",
+ "Arrays":              "resources/dsa/arrays.pdf.pdf",
+ "Strings":             "resources/dsa/Strings.pdf",
+ "Linked List":         "resources/dsa/Linked.pdf.pdf",
+ "Stack":               "resources/dsa/Stack.pdf",
+ "Queue":               "resources/dsa/Queue.pdf",
+ "Trees":               "resources/dsa/trees.pdf",
+ "Graphs":              "resources/dsa/graphs.pdf",
+ "Dynamic Programming": "resources/dsa/dynamic.pdf",
+ "Quantitative Aptitude":"resources/aptitude/Quantitative Aptitude.pdf.pdf",
+ "Logical Reasoning":   "resources/aptitude/Logical Reasoning.pdf",
+ "Verbal Ability":      "resources/aptitude/Verbal Ability.pdf.pdf",
+ "Data Interpretation": "resources/aptitude/Data Interpretation.pdf",
+ "Expert Resume Tips":  "",
+ "ATS Friendly Templates":"",
+ "Professional Layouts": "",
+ "HR Questions":        "",
+ "Technical Questions": "",
+ "Google":              "",
+ "Microsoft":           "",
+ "Amazon":              "",
+ "TCS":                 "",
+ "Infosys":             "",
+ "Accenture":           "",
+ "Capgemini":           "",
+ "Wipro":               "",
+ "HTML":                "resources/html.pdf",
+ "CSS":                 "resources/css.pdf",
+ "C":                   "resources/c.pdf",
+ "JavaScript":          "resources/javascript.pdf",
+ "Python":              "resources/python.pdf",
+ "C++":                 "resources/cpp.pdf",
+ "Operating System":    "resources/os.pdf",
+ "DBMS":                "resources/dbms.pdf",
+ "Computer Networks":   "resources/cn.pdf",
+ "OOPs":                "resources/oops.pdf",
+ "Java":                "resources/java.pdf",
+ "DSA Notes":           "resources/dsa.pdf",
 };
 
 function renderPdf(item){

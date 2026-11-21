@@ -14,10 +14,10 @@
   <div id="homeView">
     <header class="site-header">
       <a class="brand" href="#" aria-label="VBSPU Prep Hub home">
-        <span class="brand-mark">V</span><span>vbspu<span class="brand-light">prep hub</span></span>
+        <img class="brand-mark" src="logo.svg" alt=""><span>vbspu<span class="brand-light">prep hub</span></span>
       </a>
       <nav class="main-nav">
-        <a href="#explore">Explore</a><a href="#resources">Resources</a><a href="#roadmap">DSA Roadmap</a>
+        <a href="#explore">Explore</a><a href="#resources">Resources</a><a href="#roadmap">DSA Roadmap</a><a href="#feedback">Feedback</a>
       </nav>
       <div class="header-actions">
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">◐</button>
@@ -77,13 +77,39 @@
         <div id="resourceCategories"></div>
       </section>
       <section class="cta-band"><div><div class="eyebrow">YOUR FUTURE STARTS HERE</div><h2>Make your next move<br>your best one.</h2></div><button class="btn btn-light btn-large" id="bottomSignup">Create your free account ↗</button></section>
+      <section class="feedback-section" id="feedback">
+        <div class="feedback-copy">
+          <div class="eyebrow">SHARE YOUR THOUGHTS</div>
+          <h2>Help us make the hub<br><span>better for you.</span></h2>
+          <p>Your feedback helps us improve the learning resources and website experience.</p>
+          <div class="contact-card">
+            <span class="contact-label">CONTACT US</span>
+            <a href="mailto:rajmishra63541@gmail.com">rajmishra63541@gmail.com</a>
+          </div>
+        </div>
+        <form class="feedback-form" id="feedbackForm">
+          <div class="feedback-field">
+            <label for="feedbackName">Your name</label>
+            <input id="feedbackName" type="text" placeholder="Enter your name" required>
+          </div>
+          <div class="feedback-field">
+            <label for="feedbackEmail">Email address</label>
+            <input id="feedbackEmail" type="email" placeholder="you@example.com" required>
+          </div>
+          <div class="feedback-field">
+            <label for="feedbackMessage">Your feedback</label>
+            <textarea id="feedbackMessage" rows="5" placeholder="Tell us what we can improve..." required></textarea>
+          </div>
+          <button class="btn btn-dark feedback-submit" type="submit">Send feedback <span>↗</span></button>
+        </form>
+      </section>
     </main>
-    <footer><a class="brand" href="#"><span class="brand-mark">V</span><span>vbspu<span class="brand-light">prep hub</span></span></a><span>Made for learners. Built for what’s next.</span><span>© 2026 VBSPU Prep Hub</span></footer>
+    <footer><a class="brand" href="#"><img class="brand-mark" src="logo.svg" alt=""><span>vbspu<span class="brand-light">prep hub</span></span></a><span>Made and designed by <b>Raj &amp; Sneha</b></span><span>© 2026 VBSPU Prep Hub</span></footer>
   </div>
 
 
   <section class="reader-screen hidden" id="readerScreen" aria-live="polite">
-    <header class="reader-topbar"><button class="reader-back" id="readerBack">← Back to resources</button><a class="brand" href="#"><span class="brand-mark">V</span><span>vbspu<span class="brand-light">prep hub</span></span></a><button class="reader-save" id="readerSave">☆ Save lesson</button></header>
+    <header class="reader-topbar"><button class="reader-back" id="readerBack">← Back to resources</button><a class="brand" href="#"><img class="brand-mark" src="logo.svg" alt=""><span>vbspu<span class="brand-light">prep hub</span></span></a><button class="reader-save" id="readerSave">☆ Save lesson</button></header>
     <div class="reader-layout"><aside class="reader-aside"><div class="eyebrow">YOUR LEARNING LIBRARY</div><h3 id="readerCategory">DSA PREPARATION</h3><p id="readerMeta">Concept lesson · Beginner friendly</p><div class="reader-progress"><span></span></div><small>LEARN AT YOUR OWN PACE</small><div class="reader-aside-links"><button id="readerPrev">← Previous lesson</button><button id="readerNext">Next lesson →</button></div></aside><article class="lesson-article"><div class="lesson-kicker" id="readerKicker">FOUNDATIONS / LESSON 01</div><h1 id="readerTitle">Arrays</h1><p class="lesson-lead" id="readerLead"></p><div class="lesson-body" id="readerBody"></div>
 
       <!-- PDF SUPPORT: hidden automatically until a PDF path is set in script.js (see PDF_LINKS) -->
@@ -102,7 +128,7 @@
 
   <main class="auth-screen hidden" id="authScreen">
     <section class="auth-story">
-      <button class="auth-brand" id="authHome"><span class="brand-mark">V</span><span>vbspu<span class="brand-light">prep hub</span></span></button>
+      <button class="auth-brand" id="authHome"><img class="brand-mark" src="logo.svg" alt=""><span>vbspu<span class="brand-light">prep hub</span></span></button>
       <div class="story-content">
         <div class="eyebrow light-eyebrow"><span class="eyebrow-dot"></span> YOUR CAMPUS-TO-CAREER COMPANION</div>
         <h1 id="storyTitle">Your next chapter<br>starts <em>here.</em></h1>
