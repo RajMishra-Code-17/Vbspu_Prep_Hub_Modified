@@ -14,7 +14,7 @@ feedbackForm?.addEventListener("submit", (event) => {
   const subject = encodeURIComponent("Website feedback from " + name);
   const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nFeedback:\n${message}`);
   toast("Opening your email app...");
-  window.location.href = `mailto:rajmishra63541@gmail.com?subject=${subject}&body=${body}`;
+  window.location.href = `mailto:notusefulll000@gmail.com?subject=${subject}&body=${body}`;
   feedbackForm.reset();
 });
 
